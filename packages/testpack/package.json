@@ -1,0 +1,16 @@
+{
+  "name": "testpack",
+  "main": "main.js",
+  "main-menu": {
+    "Panel/Open": {
+      "message": "testpack:open"
+    }
+  },
+  "panel": {
+    "main": "panel.js",
+    "type": "dockable",
+    "title": "Panel",
+    "width": 400,
+    "height": 300
+  }
+}
