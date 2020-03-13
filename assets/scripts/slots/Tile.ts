@@ -5,6 +5,12 @@ export default class Tile extends cc.Component {
   @property({ type: [cc.SpriteFrame], visible: true })
   private textures = [];
 
+  private textureCount : number;
+
+  get tileCount() {
+    return this.textures.length;
+  }
+
   async onLoad(): Promise<void> {
     await this.loadTextures();
   }
