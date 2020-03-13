@@ -7,6 +7,9 @@ export default class Machine extends cc.Component {
   @property(cc.Node)
   public button: cc.Node = null;
 
+  @property(cc.Node)
+  public glows: cc.Node = null;
+
   @property(cc.Prefab)
   public _reelPrefab = null;
 
@@ -65,6 +68,7 @@ export default class Machine extends cc.Component {
   spin(): void {
     this.spinning = true;
     this.button.getChildByName('Label').getComponent(cc.Label).string = 'STOP';
+    this.disableGlow();
 
     for (let i = 0; i < this.numberOfReels; i += 1) {
       const theReel = this.reels[i].getComponent('Reel');
@@ -83,11 +87,12 @@ export default class Machine extends cc.Component {
     this.button.getComponent(cc.Button).interactable = false;
   }
 
-  stop(result: Array<Array<number>> = null): void {
+  stop(result: IResult = null): void {
     setTimeout(() => {
       this.spinning = false;
       this.button.getComponent(cc.Button).interactable = true;
       this.button.getChildByName('Label').getComponent(cc.Label).string = 'SPIN';
+      this.enableGlow(result);
     }, 2500);
 
     const rngMod = Math.random() / 2;
@@ -96,8 +101,35 @@ export default class Machine extends cc.Component {
       const theReel = this.reels[i].getComponent('Reel');
 
       setTimeout(() => {
-        theReel.readyStop(result[i]);
+        theReel.readyStop(result.reels[i]);
       }, spinDelay * 1000);
+    }
+  }
+
+  enableGlow(result:IResult = null): void {
+    for (const lineIndex of result.equalLines) {
+      try {
+        const line: cc.Node = this.glows.children[lineIndex]
+        for (const glow of line.children) {
+          const skel: sp.Skeleton = glow.getComponent('sp.Skeleton');
+          skel.animation = "loop";
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  disableGlow(): void {
+    try {
+      for (const line of this.glows.children) {
+        for (const glow of line.children) {
+          const skel: sp.Skeleton = glow.getComponent('sp.Skeleton');
+          skel.animation = null;
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }

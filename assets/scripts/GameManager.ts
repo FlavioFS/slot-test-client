@@ -14,7 +14,7 @@ export default class GameManager extends cc.Component {
   audioClick: cc.AudioClip = null;
 
   private block = false;
-  private result = null;
+  private result: IResult = null;
   
   private _reelCount: number = 0;
   get reelCount(): number {
@@ -71,17 +71,17 @@ export default class GameManager extends cc.Component {
     this.result = await this.getAnswer();
   }
 
-  getAnswer(): Promise<Array<Array<number>>> {
-    return new Promise<Array<Array<number>>>(resolve => {
+  getAnswer(): Promise<IResult> {
+    return new Promise<IResult>(resolve => {
       setTimeout(() => {
-        const result: IResult = SlotRoller.roll(this.tileCount, this.reelCount);
-        resolve(result.reels);
+        resolve(
+          SlotRoller.roll(this.tileCount, this.reelCount)
+        );
       }, 1000 + 500 * Math.random());
     });
   }
 
   informStop(): void {
-    const resultRelayed = this.result;
-    this.machine.getComponent('Machine').stop(resultRelayed);
+    this.machine.getComponent('Machine').stop(this.result);
   }
 }
