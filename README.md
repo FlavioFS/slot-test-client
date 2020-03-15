@@ -12,3 +12,5 @@ Features:
  - **Network log** - Sends results to server dashboard.
 
 > This project is my solution to a job application test.
+
+The **server** side is also available [:slot_machine: **HERE**](https://github.com/FlavioFS/slot-test-server).
