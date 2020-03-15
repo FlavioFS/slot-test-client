@@ -1,12 +1,14 @@
-import Tile from "./slots/Tile";
-import { Dice } from "./Dice";
 import { SlotRoller } from "./slots/SlotRoller"
+import { NetworkLog } from "./NetworkLog";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class GameManager extends cc.Component {
 
+  // ====================================================
+  // Attributes
+  // ====================================================
   @property(cc.Node)
   machine: cc.Node = null;
 
@@ -41,7 +43,11 @@ export default class GameManager extends cc.Component {
     
     return this._tileCount;
   }
-  
+
+
+  // ====================================================
+  // Methods
+  // ====================================================
   start(): void {
     this.machine.getComponent('Machine').createMachine();
   }
@@ -55,7 +61,6 @@ export default class GameManager extends cc.Component {
 
   click(): void {
     cc.audioEngine.playEffect(this.audioClick, false);
-
     if (this.machine.getComponent('Machine').spinning === false) {
       this.block = false;
       this.machine.getComponent('Machine').spin();
@@ -74,9 +79,9 @@ export default class GameManager extends cc.Component {
   getAnswer(): Promise<IResult> {
     return new Promise<IResult>(resolve => {
       setTimeout(() => {
-        resolve(
-          SlotRoller.roll(this.tileCount, this.reelCount)
-        );
+        const result: IResult = SlotRoller.roll(this.tileCount, this.reelCount);
+        resolve(result);
+        NetworkLog.appendResult(result);
       }, 1000 + 500 * Math.random());
     });
   }
@@ -84,4 +89,7 @@ export default class GameManager extends cc.Component {
   informStop(): void {
     this.machine.getComponent('Machine').stop(this.result);
   }
+
+  
+
 }

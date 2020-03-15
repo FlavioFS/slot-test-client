@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "save": "^2.4.0",
     "underscore": "^1.9.1"
   },
@@ -17,6 +18,11 @@
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "^1.19.1",
     "typescript": "^3.8.3"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
