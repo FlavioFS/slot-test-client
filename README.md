@@ -1,6 +1,7 @@
 # :slot_machine: SlotTest Client
 
-![Demo image](https://i.postimg.cc/63NhrYJX/slotclientdemo.gif)
+# [:arrow_forward: Download latest release](https://github.com/FlavioFS/slot-test-client/releases)
+[![Demo image](https://i.postimg.cc/63NhrYJX/slotclientdemo.gif)](https://github.com/FlavioFS/slot-test-client/releases)
 
 ## Description
 Client side for a simple slot machine game made with [Cocos Creator](https://www.cocos.com/en/products#CocosCreator).
